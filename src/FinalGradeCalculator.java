@@ -6,6 +6,8 @@ public class FinalGradeCalculator {
 
 	public static void main(String[] args) {
 
+		new Display();
+		
 		//Creating a new Scanner object
 		Scanner user_input = new Scanner(System.in);
 
