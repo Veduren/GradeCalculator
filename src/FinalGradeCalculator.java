@@ -67,8 +67,8 @@ public class FinalGradeCalculator {
 			}
 
 			//Calculate Minimum grade to get on the final
-			double MinimumFinalGrade = (100*(DesiredGrade - CurrentGrade*((100-FinalWorth)/(double) 100)))/(double) FinalWorth;
-			System.out.println("You will need at least: " +MinimumFinalGrade + " %");
+		//	double MinimumFinalGrade = (100*(DesiredGrade - CurrentGrade*((100-FinalWorth)/(double) 100)))/(double) FinalWorth;
+		//	System.out.println("You will need at least: " +MinimumFinalGrade + " %");
 
 		}
 		finally {

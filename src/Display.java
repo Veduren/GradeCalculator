@@ -10,32 +10,35 @@ import javax.swing.JTextField;
 
 public class Display extends JFrame {
 
-	private JButton addbutton1;
+	private JButton calculateButton;
+	private JButton resetButton;
 	private JTextField avgField;
-	private String store;
+	private JTextField desiredField;
+	private JTextField finalField;
+	private String storeAvg;
+	private String storeDesired;
+	private String storeFinal;
 
 	//constructor 
 	public Display(){
-		
+
 		//Setting up Display
 		super("Final Grade Calculator");
-		setPreferredSize(new Dimension(680,200));
+		setPreferredSize(new Dimension(680,150));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		GridLayout layout = new GridLayout(5,2); // 5 rows, 2 columns 
+		GridLayout layout = new GridLayout(4,2); // 5 rows, 2 columns 
 		setLayout(layout);
 
 		//Creating the components i.e label, text field and buttons 
 		JLabel textAvg = new JLabel("What is your current average (%): ");
 		avgField = new JTextField();
 		JLabel textDesired = new JLabel("What is your desired grade (%): ");
-		JTextField desiredField = new JTextField();
+		desiredField = new JTextField();
 		JLabel textFinal = new JLabel("How much is your final worth (%): ");
-		JTextField finalField = new JTextField();
-		JLabel textResult = new JLabel("You must obtain the following grade in the final (%): ");
-		JTextField resultField = new JTextField();
-		addbutton1 = new JButton("Calculate");
-		JButton addbutton2 = new JButton("Reset");
-		
+		finalField = new JTextField();
+		calculateButton = new JButton("Calculate");
+		resetButton = new JButton("Reset");
+
 		//Adding the components
 		add(textAvg);
 		add(avgField);
@@ -43,30 +46,40 @@ public class Display extends JFrame {
 		add(desiredField);
 		add(textFinal);
 		add(finalField);
-		add(textResult);
-		add(resultField);
-		add(addbutton2);
-		add(addbutton1);
-		
+		add(resetButton);
+		add(calculateButton);
+
 		pack();
 		setVisible(true);
 
 		//Creating new object "eventPressed" from eventHandler class
 		eventHandler eventPressed = new eventHandler();
-		addbutton1.addActionListener(eventPressed);
+		calculateButton.addActionListener(eventPressed);
+		resetButton.addActionListener(eventPressed);
 	}
-	
+
 	//new class that handles all the action
 	private class eventHandler implements ActionListener{
-		
+
 		//method called automatically when an action occurs
 		public void actionPerformed(ActionEvent e) {
 
-			if(e.getSource() == addbutton1) {
-				store = avgField.getText();
-				JOptionPane.showMessageDialog(null, store);
+			if(e.getSource() == calculateButton) {
+				storeAvg = avgField.getText();
+				double currentGrade = Double.parseDouble(storeAvg);
+				storeDesired = desiredField.getText();
+				double desiredGrade = Double.parseDouble(storeDesired);
+				storeFinal = finalField.getText();
+				double finalWorth = Double.parseDouble(storeFinal);
+				double MinimumFinalGrade = (100*(desiredGrade - currentGrade*((100-finalWorth)/(double) 100)))/(double) finalWorth;
+				double finalGrade = Math.round(MinimumFinalGrade*100)/100.0;
+				JOptionPane.showMessageDialog(null,"You will need at least: " + finalGrade +"%");		
+			}else if(e.getSource() == resetButton){
+				avgField.setText(null);
+				desiredField.setText(null);
+				finalField.setText(null);
 			}
 		}
+
 	}
-	
 }
