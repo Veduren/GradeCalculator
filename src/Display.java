@@ -26,7 +26,7 @@ public class Display extends JFrame {
 		super("Final Grade Calculator");
 		setPreferredSize(new Dimension(680,150));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		GridLayout layout = new GridLayout(4,2); // 5 rows, 2 columns 
+		GridLayout layout = new GridLayout(4,2); 
 		setLayout(layout);
 
 		//Creating the components i.e label, text field and buttons 
@@ -64,21 +64,51 @@ public class Display extends JFrame {
 		//method called automatically when an action occurs
 		public void actionPerformed(ActionEvent e) {
 
+			//if Calculate button is clicked
 			if(e.getSource() == calculateButton) {
-				storeAvg = avgField.getText();
-				double currentGrade = Double.parseDouble(storeAvg);
-				storeDesired = desiredField.getText();
-				double desiredGrade = Double.parseDouble(storeDesired);
-				storeFinal = finalField.getText();
-				double finalWorth = Double.parseDouble(storeFinal);
-				double MinimumFinalGrade = (100*(desiredGrade - currentGrade*((100-finalWorth)/(double) 100)))/(double) finalWorth;
-				double finalGrade = Math.round(MinimumFinalGrade*100)/100.0;
-				JOptionPane.showMessageDialog(null,"You will need at least: " + finalGrade +"%");		
+
+				//if all text fields are empty
+				if(avgField.getText().isEmpty() && desiredField.getText().isEmpty() && finalField.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Fill out all text fields");
+				
+				//if Current Average text field is empty
+				}else if(avgField.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Enter your current grade");
+				
+				//if Desired Grade text field is empty
+				}else if(desiredField.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Enter your desired grade");
+				
+				//if Weight of final text field is empty
+				}else if(finalField.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Enter the weight of the final");
+				
+				}else {				
+					//Calculates minimum grade in final
+					try {
+						storeAvg = avgField.getText();
+						storeDesired = desiredField.getText();
+						storeFinal = finalField.getText();
+						double currentGrade = Double.parseDouble(storeAvg);
+						double desiredGrade = Double.parseDouble(storeDesired);
+						double finalWorth = Double.parseDouble(storeFinal);
+						double MinimumFinalGrade = (100*(desiredGrade - currentGrade*((100-finalWorth)/(double) 100)))/(double) finalWorth;
+						double finalGrade = Math.round(MinimumFinalGrade*100)/100.0;
+						JOptionPane.showMessageDialog(null,"You will need at least: " + finalGrade +"%");	
+					
+					//if user does not enter a number in any of the text fields
+					}catch(NumberFormatException e1) {
+						JOptionPane.showMessageDialog(null, "Error: Enter a number between 0 and 100.");
+					}
+				}
+			
+			//if Reset button is clicked
 			}else if(e.getSource() == resetButton){
-				avgField.setText(null);
-				desiredField.setText(null);
-				finalField.setText(null);
+				avgField.setText("");
+				desiredField.setText("");
+				finalField.setText("");
 			}
+		
 		}
 
 	}
